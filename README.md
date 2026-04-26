@@ -61,8 +61,8 @@ This project helped me practice:
 ```txt
 .
 ├── main.c
-├── mie_funzioni.c
-├── mie_funzioni.h
+├── contact_manager.c
+├── contact_manager.h
 ├── contatti.txt
 └── README.md
 ```
