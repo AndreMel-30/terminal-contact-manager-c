@@ -102,4 +102,41 @@ contact-manager.exe
 
 - I contatti vengono salvati in un semplice file di testo e non in un database.
 - Il file viene aperto in modalità `a+` e riposizionato con `rewind()` prima delle operazioni di lettura.
-- 
+- Le righe dei contatti vengono analizzate con scanset `sscanf` limitate:
+  - `%49[^;]`
+  - `%49[^;]`
+  - `%19[^;]`
+- L’eliminazione di un contatto viene gestita riscrivendo i record validi in un file temporaneo e sostituendo poi il file originale.
+- Gli errori relativi ai file vengono segnalati tramite `perror()`.
+
+## Limitazioni
+
+- La ricerca è attualmente case-sensitive.
+- La validazione del numero di telefono è minima.
+- La validazione dell’indice da eliminare può essere migliorata.
+- Il progetto è pensato per esercitazione e per dataset piccoli.
+- L’allineamento dell’output può variare in presenza di caratteri UTF-8 accentati, a seconda del terminale usato.
+
+## Miglioramenti futuri
+
+- Aggiungere la modifica di un contatto
+- Aggiungere una ricerca case-insensitive
+- Migliorare la validazione dell’indice di eliminazione
+- Rifattorizzare la logica di parsing ripetuta in una funzione dedicata
+- Rinominare i file sorgente con nomi più descrittivi
+- Aggiungere test per il parsing e la gestione dell’input
+
+## Cosa ho imparato
+
+Questo progetto mi ha aiutato ad andare oltre esercizi molto piccoli e a lavorare su una vera applicazione CLI completa in C.
+
+In particolare, mi ha permesso di capire meglio:
+
+- la differenza tra leggere testo grezzo e fare parsing di dati strutturati
+- come si comportano i file stream durante operazioni di lettura e scrittura
+- come aggiornare in modo sicuro il contenuto di un file usando un file temporaneo
+- come organizzare un programma C in funzioni piccole e con responsabilità chiare
+
+## Autore
+
+Sviluppato come progetto personale di apprendimento durante lo studio del linguaggio C.
