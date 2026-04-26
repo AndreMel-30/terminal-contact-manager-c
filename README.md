@@ -1,95 +1,94 @@
 # Contact Manager in C
 
 ![Language](https://img.shields.io/badge/language-C-blue)
-![Project Status](https://img.shields.io/badge/status-learning_project-green)
-![Platform](https://img.shields.io/badge/platform-CLI-lightgrey)
+![Status](https://img.shields.io/badge/status-learning_project-green)
+![Interface](https://img.shields.io/badge/interface-CLI-lightgrey)
 
-A small command-line contact manager written in C to practice file handling, structs, string parsing, and modular program design.
+Una piccola rubrica da riga di comando scritta in C per esercitarmi con struct, gestione dei file, parsing di stringhe e organizzazione modulare del codice.
 
-## Overview
+## Descrizione del progetto
 
-This project is a simple terminal-based application that allows users to store and manage contacts in a plain text file.
+Questo progetto è una semplice rubrica da terminale che salva i contatti in un file di testo.
 
-Each contact contains:
+Ogni contatto contiene:
 
-- First name
-- Last name
-- Phone number
+- Nome
+- Cognome
+- Numero di telefono
 
-Contacts are stored in `contatti.txt` using a semicolon-separated format:
+I contatti vengono salvati nel file `contatti.txt` usando un formato separato da punto e virgola:
 
 ```txt
 Mario;Rossi;3331234567
 Anna;Verdi;3497654321
 ```
 
-The goal of the project was to build a small but complete C program while practicing low-level file operations and string handling.
+L’obiettivo principale del progetto è stato rafforzare le mie basi in C costruendo un’applicazione piccola ma completa, con persistenza dei dati su file.
 
-## Features
+## Funzionalità
 
-- Add a new contact
-- View all saved contacts
-- Search contacts by name, surname, or phone number
-- Delete a contact by selecting its index
-- Save contacts to a text file
-- Replace the original file safely using a temporary file
+- Aggiungere un nuovo contatto
+- Visualizzare tutti i contatti salvati
+- Cercare un contatto per nome, cognome o numero di telefono
+- Eliminare un contatto tramite indice
+- Salvare i dati in un file di testo
+- Sostituire in modo sicuro il file originale usando un file temporaneo
 
-## Tech stack
+## Tecnologie usate
 
 - C
-- Standard C library
-- File-based persistence with text files
+- Libreria standard del C
 
-## What I practiced
+## Cosa ho esercitato
 
-This project helped me practice:
+Questo progetto mi ha permesso di esercitarmi con:
 
-- `struct` definitions and usage
-- file handling with `FILE *`
+- uso delle `struct`
+- gestione dei file con `FILE *`
 - `fopen`, `fclose`, `fprintf`, `fgets`, `fputs`
-- `fflush()` after write operations
-- string parsing with `sscanf`
-- substring search with `strstr`
-- safe file replacement using:
+- `fflush()` dopo le operazioni di scrittura
+- parsing di testo strutturato con `sscanf`
+- ricerca di sottostringhe con `strstr`
+- sostituzione sicura di un file usando:
   - `remove()`
   - `rename()`
-  - a temporary file
-- modularization through helper functions
+  - un file temporaneo
+- suddivisione della logica in funzioni separate
 
-## Project structure
+## Struttura del progetto
 
 ```txt
 .
 ├── main.c
-├── contact_manager.c
-├── contact_manager.h
+├── mie_funzioni.c
+├── mie_funzioni.h
 ├── contatti.txt
 └── README.md
 ```
 
-## Build
+## Compilazione
 
-Compile with `gcc`:
+Esempio con `gcc`:
 
 ```bash
 gcc main.c mie_funzioni.c -o contact-manager
 ```
 
-## Run
+## Esecuzione
 
-On Linux/macOS:
+Su Linux/macOS:
 
 ```bash
 ./contact-manager
 ```
 
-On Windows:
+Su Windows:
 
 ```bash
 contact-manager.exe
 ```
 
-## Example menu
+## Esempio di menu
 
 ```txt
 1. Aggiungi un nuovo contatto
@@ -99,53 +98,8 @@ contact-manager.exe
 5. Esci dal programma
 ```
 
-## Example data
+## Dettagli implementativi
 
-```txt
-Luca;Bianchi;3330001111
-Anna;Verdi;3491234567
-Mario;Rossi;3479876543
-```
-
-## Implementation notes
-
-- Contacts are stored in a plain text file rather than a database.
-- The program uses `fopen("contatti.txt", "a+")` and explicitly calls `rewind()` before read operations.
-- Contact lines are parsed with bounded `sscanf` scansets:
-  - `%49[^;]`
-  - `%49[^;]`
-  - `%19[^;]`
-- File deletion is implemented by copying all valid records except the selected one into a temporary file, then replacing the original file.
-
-## Limitations
-
-- Search is currently case-sensitive.
-- The delete operation does not yet validate whether the selected index is out of range before rewriting the file.
-- Data validation is minimal, especially for phone numbers.
-- The project currently uses a simple text-file format and is not intended for large datasets.
-- Output formatting in the terminal may not align perfectly with accented UTF-8 characters depending on the console.
-
-## Possible improvements
-
-- Add contact editing
-- Add case-insensitive search
-- Improve phone number validation
-- Validate delete index before file rewrite
-- Refactor repeated parsing logic into a dedicated helper function
-- Rename source files to more descriptive names
-- Add unit tests for parsing and input handling
-
-## What I learned
-
-This project helped me move beyond very small exercises and work on a complete CLI application in C.
-
-In particular, I improved my understanding of:
-
-- the difference between reading raw lines and parsing structured fields
-- how file streams behave when reading and writing
-- how to safely update file contents through a temporary file
-- how to organize a C program into smaller functions with separate responsibilities
-
-## Author
-
-Developed as a personal learning project while practicing C programming.
+- I contatti vengono salvati in un semplice file di testo e non in un database.
+- Il file viene aperto in modalità `a+` e riposizionato con `rewind()` prima delle operazioni di lettura.
+- 
