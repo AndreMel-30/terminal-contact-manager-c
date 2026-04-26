@@ -1,14 +1,14 @@
-# Contact Manager in C
+# Rubrica da terminale in C
 
 ![Language](https://img.shields.io/badge/language-C-blue)
 ![Status](https://img.shields.io/badge/status-learning_project-green)
 ![Interface](https://img.shields.io/badge/interface-CLI-lightgrey)
 
-Una piccola rubrica da riga di comando scritta in C per esercitarmi con struct, gestione dei file, parsing di stringhe e organizzazione modulare del codice.
+Piccolo progetto in C sviluppato per esercitarmi con struct, gestione dei file, parsing di stringhe e organizzazione del codice in funzioni.
 
-## Descrizione del progetto
+## Il progetto
 
-Questo progetto è una semplice rubrica da terminale che salva i contatti in un file di testo.
+Questa applicazione è una semplice rubrica da terminale che permette di salvare, visualizzare, cercare ed eliminare contatti utilizzando un file di testo come archivio.
 
 Ogni contatto contiene:
 
@@ -16,44 +16,44 @@ Ogni contatto contiene:
 - Cognome
 - Numero di telefono
 
-I contatti vengono salvati nel file `contatti.txt` usando un formato separato da punto e virgola:
+I dati vengono salvati nel file `contatti.txt` nel formato:
 
 ```txt
 Mario;Rossi;3331234567
 Anna;Verdi;3497654321
 ```
 
-L’obiettivo principale del progetto è stato rafforzare le mie basi in C costruendo un’applicazione piccola ma completa, con persistenza dei dati su file.
+L’obiettivo del progetto è stato mettere in pratica alcuni concetti fondamentali del C attraverso un programma piccolo, ma completo e persistente.
 
 ## Funzionalità
 
-- Aggiungere un nuovo contatto
-- Visualizzare tutti i contatti salvati
-- Cercare un contatto per nome, cognome o numero di telefono
-- Eliminare un contatto tramite indice
-- Salvare i dati in un file di testo
-- Sostituire in modo sicuro il file originale usando un file temporaneo
+- Inserimento di un nuovo contatto
+- Visualizzazione di tutti i contatti salvati
+- Ricerca per nome, cognome o numero di telefono
+- Eliminazione di un contatto tramite indice
+- Salvataggio dei dati su file
+- Sostituzione sicura del file originale tramite file temporaneo
 
-## Tecnologie usate
+## Strumenti usati
 
-- C
+- Linguaggio C
 - Libreria standard del C
 
-## Cosa ho esercitato
+## Competenze esercitate
 
-Questo progetto mi ha permesso di esercitarmi con:
+Con questo progetto ho lavorato su:
 
 - uso delle `struct`
 - gestione dei file con `FILE *`
 - `fopen`, `fclose`, `fprintf`, `fgets`, `fputs`
-- `fflush()` dopo le operazioni di scrittura
-- parsing di testo strutturato con `sscanf`
+- `fflush()` dopo la scrittura
+- parsing di righe strutturate con `sscanf`
 - ricerca di sottostringhe con `strstr`
-- sostituzione sicura di un file usando:
+- aggiornamento sicuro di un file con:
   - `remove()`
   - `rename()`
-  - un file temporaneo
-- suddivisione della logica in funzioni separate
+  - file temporaneo
+- organizzazione del codice in funzioni separate
 
 ## Struttura del progetto
 
@@ -74,7 +74,7 @@ Esempio con `gcc`:
 gcc main.c mie_funzioni.c -o contact-manager
 ```
 
-## Esecuzione
+## Avvio
 
 Su Linux/macOS:
 
@@ -100,43 +100,43 @@ contact-manager.exe
 
 ## Dettagli implementativi
 
-- I contatti vengono salvati in un semplice file di testo e non in un database.
-- Il file viene aperto in modalità `a+` e riposizionato con `rewind()` prima delle operazioni di lettura.
-- Le righe dei contatti vengono analizzate con scanset `sscanf` limitate:
+- I contatti vengono memorizzati in un file di testo, non in un database.
+- Il file viene aperto in modalità `a+` e riposizionato con `rewind()` prima della lettura.
+- Il parsing delle righe avviene con `sscanf` usando limiti di lunghezza:
   - `%49[^;]`
   - `%49[^;]`
   - `%19[^;]`
-- L’eliminazione di un contatto viene gestita riscrivendo i record validi in un file temporaneo e sostituendo poi il file originale.
-- Gli errori relativi ai file vengono segnalati tramite `perror()`.
+- L’eliminazione di un contatto viene gestita copiando i record validi in un file temporaneo e poi sostituendo il file originale.
+- Gli errori nelle operazioni sui file vengono segnalati con `perror()`.
 
 ## Limitazioni
 
-- La ricerca è attualmente case-sensitive.
-- La validazione del numero di telefono è minima.
-- La validazione dell’indice da eliminare può essere migliorata.
-- Il progetto è pensato per esercitazione e per dataset piccoli.
-- L’allineamento dell’output può variare in presenza di caratteri UTF-8 accentati, a seconda del terminale usato.
+- La ricerca è sensibile a maiuscole e minuscole.
+- La validazione del numero di telefono è ancora minimale.
+- Il controllo dell’indice da eliminare può essere migliorato.
+- Il progetto è pensato per scopi didattici e per quantità ridotte di dati.
+- L’allineamento dell’output può non essere perfetto con caratteri accentati UTF-8, a seconda del terminale.
 
-## Miglioramenti futuri
+## Possibili sviluppi
 
 - Aggiungere la modifica di un contatto
-- Aggiungere una ricerca case-insensitive
-- Migliorare la validazione dell’indice di eliminazione
-- Rifattorizzare la logica di parsing ripetuta in una funzione dedicata
+- Rendere la ricerca case-insensitive
+- Migliorare la validazione dell’input
+- Spostare il parsing ripetuto in una funzione dedicata
 - Rinominare i file sorgente con nomi più descrittivi
-- Aggiungere test per il parsing e la gestione dell’input
+- Aggiungere test per parsing e input handling
 
 ## Cosa ho imparato
 
-Questo progetto mi ha aiutato ad andare oltre esercizi molto piccoli e a lavorare su una vera applicazione CLI completa in C.
+Questo progetto mi ha aiutato a fare un passo oltre gli esercizi molto piccoli, lavorando su un programma completo da riga di comando.
 
-In particolare, mi ha permesso di capire meglio:
+In particolare mi ha permesso di consolidare:
 
-- la differenza tra leggere testo grezzo e fare parsing di dati strutturati
-- come si comportano i file stream durante operazioni di lettura e scrittura
-- come aggiornare in modo sicuro il contenuto di un file usando un file temporaneo
-- come organizzare un programma C in funzioni piccole e con responsabilità chiare
+- la differenza tra lettura di testo grezzo e parsing di dati strutturati
+- il comportamento dei file stream in lettura e scrittura
+- l’aggiornamento sicuro di un file tramite file temporaneo
+- la suddivisione del codice in funzioni con responsabilità chiare
 
 ## Autore
 
-Sviluppato come progetto personale di apprendimento durante lo studio del linguaggio C.
+Progetto personale sviluppato per esercitarmi con il linguaggio C.
