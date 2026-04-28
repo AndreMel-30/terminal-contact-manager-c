@@ -1,61 +1,72 @@
-# Rubrica da terminale in C
+# Terminal Contact Manager in C
 
 ![Language](https://img.shields.io/badge/language-C-blue)
 ![Status](https://img.shields.io/badge/status-learning_project-green)
 ![Interface](https://img.shields.io/badge/interface-CLI-lightgrey)
 
-Piccolo progetto in C sviluppato per esercitarmi con struct, gestione dei file, parsing di stringhe e organizzazione del codice in funzioni.
+A small command-line contact manager written in C.
 
-## Il progetto
+This project was developed as a practical exercise to work on core C concepts such as:
+- structs
+- file handling
+- string parsing
+- input validation
+- and code organization across multiple functions
 
-Questa applicazione è una semplice rubrica da terminale che permette di salvare, visualizzare, cercare ed eliminare contatti utilizzando un file di testo come archivio.
+## Project overview
 
-Ogni contatto contiene:
+The program stores a simple contact list in a text file and allows the user to:
 
-- Nome
-- Cognome
-- Numero di telefono
+- add a new contact
+- display all saved contacts
+- search for a contact
+- delete a contact by index
 
-I dati vengono salvati nel file `contatti.txt` nel formato:
+Each contact contains:
+- first name
+- last name
+- phone number
+
+The data is stored in a plain text file called `contatti.txt`, using a semicolon-separated format such as:
 
 ```txt
 Mario;Rossi;3331234567
 Anna;Verdi;3497654321
 ```
 
-L’obiettivo del progetto è stato mettere in pratica alcuni concetti fondamentali del C attraverso un programma piccolo, ma completo e persistente.
+This is a small educational project, so the goal is not to build a full address book application, but to practice low-level programming and file-based data management in C.
 
-## Funzionalità
+## Features
 
-- Inserimento di un nuovo contatto
-- Visualizzazione di tutti i contatti salvati
-- Ricerca per nome, cognome o numero di telefono
-- Eliminazione di un contatto tramite indice
-- Salvataggio dei dati su file
-- Sostituzione sicura del file originale tramite file temporaneo
+- Add a new contact
+- View all saved contacts
+- Search by name, surname, or phone number
+- Delete a contact by selecting its index
+- Persistent storage using a text file
+- Safe file replacement through a temporary file
 
-## Strumenti usati
+## Technologies used
 
-- Linguaggio C
-- Libreria standard del C
+- **C**
+- **C Standard Library**
 
-## Competenze esercitate
+## Concepts practiced
 
-Con questo progetto ho lavorato su:
+This project was useful to reinforce:
 
-- uso delle `struct`
-- gestione dei file con `FILE *`
+- `struct` usage
+- file handling with `FILE *`
 - `fopen`, `fclose`, `fprintf`, `fgets`, `fputs`
-- `fflush()` dopo la scrittura
-- parsing di righe strutturate con `sscanf`
-- ricerca di sottostringhe con `strstr`
-- aggiornamento sicuro di un file con:
+- `fflush()` after writes
+- parsing structured lines with `sscanf`
+- substring search with `strstr`
+- safe file update using:
   - `remove()`
   - `rename()`
-  - file temporaneo
-- organizzazione del codice in funzioni separate
+  - a temporary file
+- splitting logic into separate functions
 
-## Struttura del progetto
+## Project structure
 
 ```txt
 .
@@ -66,77 +77,72 @@ Con questo progetto ho lavorato su:
 └── README.md
 ```
 
-## Compilazione
+## Build
 
-Esempio con `gcc`:
+Example with `gcc`:
 
 ```bash
 gcc main.c mie_funzioni.c -o contact-manager
 ```
 
-## Avvio
+## Run
 
-Su Linux/macOS:
+On Linux/macOS:
 
 ```bash
 ./contact-manager
 ```
 
-Su Windows:
+On Windows:
 
 ```bash
 contact-manager.exe
 ```
 
-## Esempio di menu
+## Example menu
 
 ```txt
-1. Aggiungi un nuovo contatto
-2. Visualizza tutti i contatti
-3. Cerca un contatto
-4. Elimina Contatto
-5. Esci dal programma
+1. Add a new contact
+2. View all contacts
+3. Search for a contact
+4. Delete a contact
+5. Exit
 ```
 
-## Dettagli implementativi
+## Implementation notes
 
-- I contatti vengono memorizzati in un file di testo, non in un database.
-- Il file viene aperto in modalità `a+` e riposizionato con `rewind()` prima della lettura.
-- Il parsing delle righe avviene con `sscanf` usando limiti di lunghezza:
-  - `%49[^;]`
-  - `%49[^;]`
-  - `%19[^;]`
-- L’eliminazione di un contatto viene gestita copiando i record validi in un file temporaneo e poi sostituendo il file originale.
-- Gli errori nelle operazioni sui file vengono segnalati con `perror()`.
+- Contacts are stored in a text file, not in a database.
+- The file is opened in `a+` mode and repositioned with `rewind()` before reading.
+- Contact fields are parsed with `sscanf` using length limits to reduce overflow risks.
+- Deletion is handled by copying valid records into a temporary file and then replacing the original one.
+- File-related errors are reported with `perror()`.
 
-## Limitazioni
+## Current limitations
 
-- La ricerca è sensibile a maiuscole e minuscole.
-- La validazione del numero di telefono è ancora minimale.
-- Il controllo dell’indice da eliminare può essere migliorato.
-- Il progetto è pensato per scopi didattici e per quantità ridotte di dati.
-- L’allineamento dell’output può non essere perfetto con caratteri accentati UTF-8, a seconda del terminale.
+- Search is case-sensitive.
+- Phone number validation is still minimal.
+- Index validation for deletion can be improved.
+- The project is intended for small datasets and learning purposes.
+- Output alignment may vary depending on terminal and character encoding.
 
-## Possibili sviluppi
+## Possible improvements
 
-- Aggiungere la modifica di un contatto
-- Rendere la ricerca case-insensitive
-- Migliorare la validazione dell’input
-- Spostare il parsing ripetuto in una funzione dedicata
-- Rinominare i file sorgente con nomi più descrittivi
-- Aggiungere test per parsing e input handling
+- Add contact editing
+- Make search case-insensitive
+- Improve input validation
+- Move repeated parsing logic into a dedicated helper function
+- Rename source files with more descriptive names
+- Add tests for parsing and input handling
 
-## Cosa ho imparato
+## Why this project
 
-Questo progetto mi ha aiutato a fare un passo oltre gli esercizi molto piccoli, lavorando su un programma completo da riga di comando.
+The main purpose of this project was to move beyond very small C exercises and build a simple but complete terminal application with persistent data.
 
-In particolare mi ha permesso di consolidare:
+It helped reinforce the difference between:
+- raw text input and structured parsing
+- basic file reading and safe file updating
+- writing code that works and organizing it into reusable functions
 
-- la differenza tra lettura di testo grezzo e parsing di dati strutturati
-- il comportamento dei file stream in lettura e scrittura
-- l’aggiornamento sicuro di un file tramite file temporaneo
-- la suddivisione del codice in funzioni con responsabilità chiare
+---
 
-## Autore
-
-Progetto personale sviluppato per esercitarmi con il linguaggio C.
+**Author:** Andrea Melissari
