@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <string.h>
+#include "mie_funzioni.h" // Le virgolette indicano di cercare il file nella cartella locale, 
+// non nel sistema
+
+int get_int(void)
+{
+    char temp[120]; // memoria temporeanea in cui metto gli interi inseriti (120 byte in ram)
+    char extra[120]; // memoria di sicurezza nel caso in cui inserissi caratteri non numerici
+    int num; // numero inserito dall'utente 
+    int valid;
+    // Se inserisci una stringa più lunga di 120 byte, 
+    // l'eccedenza non viene processata, ma genera due criticità strutturali: 
+    // un potenziale Buffer Overflow sull'array di destinazione 
+    // e un blocco di dati residui nel flusso di input.
+
+    while (1) 
+    {
+        // svuota il buffer di input e inserisce tutta la stringa di input in temp
+        fgets(temp, sizeof(temp), stdin);
+        valid = sscanf(temp,"%d%s",&num,extra); // legge da temp: salva i numeri in num e i caratteri nell'array extra
+        // Il motivo per cui c'è l'array extra è che se per esempio inserisco:
+        // 123a, valid = 2 ed essendo non valido lo devo reinserire
+
+        if(valid == 1)
+        {
+            return num;
+        } 
+        printf("Valore non valido, riprovare\n");
+    }
+}
+
+/* Funzione per l'acquisizione sicura di una stringa testuale.
+Riceve in input il puntatore all'array di destinazione (dest) e la sua capienza fisica massima (n).
+Restituisce un intero che funge da codice di stato: 1 (successo) o 0 (fallimento). Se viene inserita una stringa
+più lunga di n essa viene troncata da fgets e rimangono caratteri nel buffer di input*/
+
+int get_string(char dest[], size_t n)
+{
+    // fgets preleva fino a (n-1) caratteri dal buffer della tastiera (stdin).
+    // Se la lettura fallisce a livello di sistema (es. interruzione del flusso o End-Of-File prima di leggere dati), 
+    // la funzione restituisce il puntatore nullo (NULL).
+    if (fgets(dest, n, stdin) == NULL) 
+    {
+        return 0; // Interrompe l'esecuzione e segnala l'errore al chiamante
+    }
+    
+    // strcspn ispeziona l'array 'dest' e restituisce l'indice numerico esatto in cui si trova il carattere '\n'.
+    // Utilizziamo questo indice per accedere a quella specifica cella di memoria e sovrascriverla con '\0'.
+    // Se la stringa è stata troncata e non contiene '\n', strcspn restituisce l'indice del '\0' finale, 
+    // sovrascrivendolo in modo ridondante ma matematicamente sicuro.
+    dest[strcspn(dest, "\n")] = '\0';
+
+
+    // Verifica lo stato del primo byte della stringa (all'indice 0).
+    // Se l'utente ha premuto solo il tasto Invio, fgets acquisisce solo '\n'.
+    // Al passaggio 2, quel '\n' all'indice 0 è stato trasformato in '\0'.
+    // Se dest[0] è '\0', significa che la stringa utile ha lunghezza zero.
+    if (dest[0] == '\0') 
+    {
+        return 0; // Rifiuta l'input vuoto e segnala il fallimento logico
+    }
+
+    // 4. Fase di Conclusione
+    // Tutti i controlli strutturali sono stati superati. La memoria in 'dest' contiene un dato pulito.
+    return 1; 
+}
